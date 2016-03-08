@@ -1,6 +1,7 @@
 function [distance, angle, errormsg] = getDistance( angle )
 %%create the system command    
-base_cmd = 'python get_serial_data.py %d';
+%base_cmd = 'python get_serial_data.py %d';
+base_cmd = 'python dummy_data.py %d';
 cmd = sprintf(base_cmd, angle);
 
 %%run the command and grab data from the sensor
