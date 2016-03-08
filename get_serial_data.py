@@ -17,6 +17,8 @@ ser.port = '/dev/ttyACM0'
 
 ser.baudrate = 9600 
 
+ser.dtr = 0
+
 def sigint_handler(signal, frame):
     ser.flushInput()
     ser.close()
@@ -40,10 +42,10 @@ if ser.isOpen():
         #flush the buffers
         #ser.flushOutput()
         
-        while True:#ser.in_watting < 1:
-            if ser.read(1) == b'*':
-                ser.flushInput()
-                break
+        #while True:#ser.in_watting < 1:
+         #   if ser.read(1) == b'*':
+          #      ser.flushInput()
+           #     break
                 #break
 
         #send the angle that you want the distance from 

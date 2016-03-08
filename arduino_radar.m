@@ -1,33 +1,54 @@
 clear all
 clc
 %Const vars:
-data_file_path = 'data_files/data_2.csv';
+%data_file_path = 'data_files/data_2.csv';
+kupper_angle = 170;
+klower_angle = 1;
+kscan_step = 1;
+ksweep_length = ((kupper_angle - klower_angle) + 1)/kscan_step;
 
+kmax_distance = 400;
 
+polarplot([0 pi], [0 0]);
 
-%read the data in from the file
-data = csvread(data_file_path);
-%convert degrees to radians for ploting
-data(:,1) = data(:,1)*(pi/180);
+ax = gca;
 
-%coords = pol2cart(data(:,1), data(:,2));
+ax.ThetaLimMode = 'manual';
+ax.ThetaLim = [0 180];
+ax.RLimMode = 'manual';
+ax.RLim = [0 400]; 
+ax.RAxis.Label.String = 'Distance (cm)';
+ax.ThetaGrid = 'off';
+ax.Title.String = 'Arduino Radar';
 
-%plot(coords);
+%%create the struct that will hold all the information about each point
+current_scan_data = struct('angleDeg',[],'angleRad', [], 'distance', [], 'new', true);
 
-%plot the data
-%figure
-polar(data(1,1), data(1,2));
+%init the scan data vec
+scan_data_vec = current_scan_data;
 
-%for i = 1:70
-   % polar(data(i,1), data(i,2)); 
-    %drawnow
-    %hold on
-    %m(i) = getframe();
+%init the coords variable
+%scan_data = [klower_angle:scan_step:kupper_angle; zeros(ksweep_length)];
+
+%the main program loop
+%while true
+    for current_angle = klower_angle:kscan_step:kupper_angle
+        [distance, angle, errormsg] = getDistance(current_angle);
+        %Degrees:
+        current_scan_data.angleDeg = current_angle;
+        %Rad:
+        current_scan_data.angleRad = angle*(pi/180);
+        %Distance value:
+        current_scan_data.distance = distance;
+        %Age:
+        current_scan_data.new = true;
+        
+        %add the value to the struct vec
+        scan_data_vec = updateScanData(current_scan_data, scan_data_vec);
+        
+        
+        
+        fprintf('Angle: %d Distance: %d\n', current_scan_data.angleDeg, current_scan_data.distance);
+        
+    end
 %end
-
-num = 1;
-fps = 5;
-%movie(m,num,fps);
-
-
-%function average_values
