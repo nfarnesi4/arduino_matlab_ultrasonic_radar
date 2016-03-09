@@ -12,7 +12,8 @@
 
 #define TRIGGER_PIN  2  // Arduino pin tied to trigger pin on the ultrasonic sensor.
 #define ECHO_PIN     3  // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE 400 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+#define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+//#define PING_MEAN_SAMPLE_COUNT 10
 
 #define SERVO_PIN 9
  
@@ -30,8 +31,6 @@ void setup()
 {
   Serial.begin(9600);
   servo.attach(SERVO_PIN);
-  Serial.print("*"); 
-  //servo.write(pos);
 } 
  
 void loop() 
@@ -40,7 +39,7 @@ void loop()
   if(new_pos_received){
     //move the servo
     servo.write(pos);
-    delay(20); //wait for servo to move
+    delay(50); //wait for servo to move
     
     //get the distance reading in cm
     int distance = sonar.convert_cm(sonar.ping_median());
@@ -60,9 +59,10 @@ void loop()
 void serialEvent()
 { 
   while (Serial.available()){
-    //pos = Serial.parseInt();
-    //check for end char
+    //read in the serial data from the computer char by char
     char in = (char)Serial.read();
+    
+    //check for end char
     if (in != '!'){
       in_str += in; 
     }
@@ -72,7 +72,5 @@ void serialEvent()
       in_str = "";
       break;
     }
-    //char in_data = Serial.read();
-    //Serial.println(in_data);
   }
 }

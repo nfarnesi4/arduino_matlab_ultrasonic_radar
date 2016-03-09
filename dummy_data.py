@@ -13,5 +13,5 @@ def sigint_handler(signal, frame):
     sys.exit(0)
 signal.signal(signal.SIGINT, sigint_handler)
 
-print(angle + ', ' + str(random.randint(250,400)) )
+print(angle + ', ' + str(random.randint(120,200)) )
 
