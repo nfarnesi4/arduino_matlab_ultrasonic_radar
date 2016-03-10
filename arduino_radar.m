@@ -16,7 +16,7 @@ kserial_port = '/dev/ttyACM1';
 %spike filter const:
 kbuffer_length = 7; %must be an odd number
 kmidpoint_size = 3; %must be lower than the buffer_lenght/2
-kspike_threshold = 40;
+kspike_threshold = 60;
 
 %%Program vars:
 
