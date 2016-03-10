@@ -1,5 +1,3 @@
-Simple matlab radar using an arduino with servo and HC-SR04 ping sensor.
+#Simple matlab radar using an arduino with servo and HC-SR04 ping sensor.
 
-Dependecies:
-http://www.mathworks.com/hardware-support/arduino-matlab.html http://www.mathworks.com/hardware-support/arduino-simulink.html
 
