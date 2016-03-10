@@ -11,7 +11,7 @@ ksweep_length = ((kupper_angle - klower_angle) + 1)/kscan_step;
 
 %sensor const:
 kmax_distance = 200;
-kserial_port = '/dev/ttyACM1';
+kserial_port = '/dev/ttyACM0';
 
 %spike filter const:
 kbuffer_length = 7; %must be an odd number
@@ -34,6 +34,10 @@ scan_data_vec = current_scan_data;
 
 %get the plot object for updateing he data
 pp = polarplot([scan_data_vec.angleRad], [scan_data_vec.distance]);
+
+%setup line properies
+pp.LineWidth = 4;
+pp.Color = 'green'
 
 %get plot axis handle
 ax = gca;
